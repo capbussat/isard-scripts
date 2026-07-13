@@ -1,4 +1,4 @@
-# Configuració plantilla ISARD
+# Configuració inicial plantilla ISARD
 sudo apt update -y
 sudo apt upgrade -y
 sudo apt install vim net-tools htop curl wget spice-vdagent qemu-guest-agent

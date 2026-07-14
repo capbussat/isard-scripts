@@ -1,15 +1,15 @@
 # Proves amb NFT Tables en la màquina Servidor
 ## Treure netplan
-sudo mv /etc/netplan/50-cloud-init.yaml  /etc/netplan/50-cloud-init.yaml.bak
-sudo netplan apply
+sudo mv /etc/netplan/50-cloud-init.yaml  /etc/netplan/50-cloud-init.yaml.bak  
+sudo netplan apply  
 
 ### Hi ha tres xarxes d'isard: enp1s0 default enp2s02 wireguard-vpn i enp3s0 Personal 1
-cd /etc/systemd/network/
-ls
+cd /etc/systemd/network/  
+ls  
 ### Hi ha els fitxer 10.network 20.network i 30.network
 ### Crea un dhcp en la xarxa 10.10.10.0/24 que comença per 10.10.10.101
-cat 10.network; cat 20.network; cat 30.network;
-
+cat 10.network; cat 20.network; cat 30.network;  
+  
 [Match]  
 Name=enp1s0  
 [Network]  

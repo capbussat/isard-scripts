@@ -9,6 +9,7 @@ define LAN = enp3s0
 define DMZ = enp4s0
 define LAN_NET = 10.10.10.0/24
 define LAN_DMZ = 192.168.10.0/24
+define SERVER_DMZ = 192.168.0.2
 
 table inet filter {
 	chain input {

@@ -16,11 +16,11 @@ enp4s0 Personal2
 EOF
 
 install(){  
-sudo hostnamectl set-hostname "servidor-dhcp"
-sudo apt update -y   
-sudo apt upgrade  
-sudo apt install kea-dhcp4-server 
-sudo apt autoremove  
+    sudo hostnamectl set-hostname "servidor-dhcp"
+    sudo apt update -y   
+    sudo apt upgrade  
+    sudo apt install kea-dhcp4-server 
+    sudo apt autoremove  
 }
 
 configure(){

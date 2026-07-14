@@ -8,7 +8,7 @@ cd /etc/systemd/network/
 ls  
 ### Hi ha els fitxers 10.network 20.network i 30.network
 ### Crea un dhcp en la xarxa 10.10.10.0/24 que comença per 10.10.10.101
-cat 10.network; cat 20.network; cat 30.network;  
+cat 10.network; cat 20.network; cat 30.network;  40.network;  
   
 [Match]  
 Name=enp1s0  
@@ -34,6 +34,12 @@ DNS=1.1.1.1
 EmitDNS=yes  
 EmitRouter=yes  
 Router=10.10.10.1  
+
+[Match]  
+Name=enp4s0  
+[Network]  
+DHCP=no  
+Address=192.168.10.1/24  
 
 ### Sistema administrat amb systemd-networkd
 sudo systemctl start systemd.networkd  

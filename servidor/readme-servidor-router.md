@@ -56,6 +56,9 @@ DNSStubListenerExtra=10.10.10.1
 DNSStubListenerExtra=192.168.10.1  
 ReadEtcHosts=yes  
 
+### Cal reiniciar:
+sudo systemctl restart systemd-resolved
+sudo systemctl status systemd-resolved
 ### Pots posar el servidors locals com servidor.cat
 sudo nano /etc/hosts
 

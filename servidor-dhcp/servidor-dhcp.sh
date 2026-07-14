@@ -47,12 +47,20 @@ if [[ $tecla == [sS] ]]; then
     echo ""
     install
 fi
+
 echo "..."
 read -n 1 -p "Comprovem que hi ha enp1s0 amb default enp2s0 wireguard-vpn i dues xarxes persona 1 i personal 2 sense ip. Seguim (s/n)?"  tecla  
 if [[ $tecla == [sS] ]]; then
     ip -c address show
 fi 
 echo "..."
+
+read -n 1 -p "Actualitza la xarxa (s/n)?" tecla
+if [[ $tecla == [sS] ]]; then
+    network
+fi
+echo "..."
+
 
 read -n 1 -p "Configura DHCP4 a la xarxa personal 1 (enp3s0). Seguim (s/n)?" tecla
 if [[ $tecla == [sS] ]]; then

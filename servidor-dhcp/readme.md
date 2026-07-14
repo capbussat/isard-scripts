@@ -1,5 +1,12 @@
 # Servidor DHCP
 Fem un servidor DHCP en un router amb ISC KEA.  
+Aquest servidor serà el servidor principal.  
+Hauria de tenir una connexio   
+- enp1s0 default  
+- enp2s0 Wireguard  
+- enp3s0 Personal1
+- enp4s0 Personal2 
+
 ## Instal·lació
 sudo apt update -y  
 sudo apt install git  

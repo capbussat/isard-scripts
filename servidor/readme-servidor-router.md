@@ -36,16 +36,16 @@ EmitRouter=yes
 Router=10.10.10.1  
 
 ### Sistema administrat amb systemd-networkd
-sudo systemctl start systemd.networkd
-sudo systemctl status systemd-networkd
-ip -c a
+sudo systemctl start systemd.networkd  
+sudo systemctl status systemd-networkd  
+ip -c a  
 
 ### Forward el paquet
 ### sysctl - configure kernel parameters at runtime
-sudo sysctl -w net.ipv4.ip_forward=1
+sudo sysctl -w net.ipv4.ip_forward=1  
 ### posa  net.ipv4.ip_forward=1 en el fitxer
-sudo nano /etc/sysctl.d/99-sysctl.conf
-sudo sysctl -p
+sudo nano /etc/sysctl.d/99-sysctl.conf  
+sudo sysctl -p  
 
 ### resolved
 sudo nano /etc/systemd/resolved.conf
@@ -57,17 +57,17 @@ DNSStubListenerExtra=192.168.10.1
 ReadEtcHosts=yes  
 
 ### Cal reiniciar:
-sudo systemctl restart systemd-resolved
-sudo systemctl status systemd-resolved
+sudo systemctl restart systemd-resolved  
+sudo systemctl status systemd-resolved  
 ### Pots posar el servidors locals com servidor.cat
-sudo nano /etc/hosts
+sudo nano /etc/hosts  
 
 ### Inici del servei NFT i llistats (fitxer nftables_ruleset.backup) 
 sudo cat nftables_ruleset.backup > /etc/nftables/nftables.conf
 
-sudo systemctl status nftables
-sudo nft list tables
-sudo nft list ruleset
+sudo systemctl status nftables  
+sudo nft list tables  
+sudo nft list ruleset  
 
 ### Hi ha un NAT masquerade per qualsevol adreça de la xarxa 10.10.10.0/24 pot accedir a internet a traves de enp1s0
 
@@ -80,5 +80,5 @@ wget localhost:80
 
 ### Terminal 2
 ### Per comprovar nftables
-sudo journalctl  -k -f 
-sudo dmesg -w | grep "NFT TEST"
+sudo journalctl  -k -f  
+sudo dmesg -w | grep "NFT TEST"  

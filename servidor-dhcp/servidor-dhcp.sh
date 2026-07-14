@@ -35,6 +35,13 @@ configure(){
    sudo systemctl status kea-dhcp4-server
 }
 
+network(){
+    sudo mv /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.bak
+    sudo cp netplan.yaml /etc/netplan/10-cloud-init.yaml
+    sudo chmod 600 /etc/netplan/10-cloud-init.yaml
+    sudo netplan apply
+}
+
 read -n 1 -p "Actulitza i instal·lació del paquets del servidor KEA DHCP? (s/n)" tecla
 if [[ $tecla == [sS] ]]; then
     echo ""

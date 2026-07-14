@@ -44,9 +44,9 @@ escriptori(){
 # Canvia colors
 colors(){
     source /etc/os-release 
-    if [[ "$XDG_CURRENT_DESKTOP" == *"MATE"* && "$NAMEe"=="UBUNTU" && "$VERSION_ID" == "24.04" ]]; then
+    if [[ "$XDG_CURRENT_DESKTOP" == *"MATE"* && "$ID" == "UBUNTU" && "$VERSION_ID" == "24.04" ]]; then
         echo "Canviant el fons de UBUNTU MATE 24.04"
-        gsettings set org.mate.background picture-filename '/usr/share/backgrounds/ubuntu-mate-photos/k>
+        gsettings set org.mate.background picture-filename '/usr/share/backgrounds/ubuntu-mate-photos/kristopher-roller-110203.jpg'
         PERFIL="/org/mate/terminal/profiles/default/"
     
         echo "Configurant el perfil de MATE Terminal..."

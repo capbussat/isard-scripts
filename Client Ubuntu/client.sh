@@ -13,31 +13,35 @@ escriptori(){
 
     echo "Creant enllaços a: $DESKTOP_DIR"
     
-    # 2. Crear l'enllaç de la Terminal
-    cat <<EOF > "$DESKTOP_DIR/Terminal.desktop"
-    [Desktop Entry]
-    Version=1.0
-    Type=Application
-    Name=Terminal
-    Comment=Obre la terminal de comandos
-    Exec=mate-terminal
-    Icon=utilities-terminal
-    Terminal=false
-    Categories=System;TerminalEmulator;
-    EOF
+# 2. Crear l'enllaç de la Terminal (EOF i el contingut sense espais al davant !!)
+cat <<EOF > "$DESKTOP_DIR/Terminal.desktop"
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Terminal
+Comment=Obre la terminal de comandos
+Exec=mate-terminal
+Icon=utilities-terminal
+Terminal=false
+Categories=System;TerminalEmulator;
+EOF
 
-    # 3. Crear l'enllaç de Firefox
-    cat <<EOF > "$DESKTOP_DIR/Firefox.desktop"
-    [Desktop Entry]
-    Version=1.0
-    Type=Application
-    Name=Firefox
-    Comment=Navegador web Firefox
-    Exec=firefox
-    Icon=firefox
-    Terminal=false
-    Categories=Network;WebBrowser;
-    EOF
+    # 3. Crear l'enllaç de Firefox (EOF i el contingut sense espais al davant)
+cat <<EOF > "$DESKTOP_DIR/Firefox.desktop"
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Firefox
+Comment=Navegador web Firefox
+Exec=firefox
+Icon=firefox
+Terminal=false
+Categories=Network;WebBrowser;
+EOF
+
+    # Recorda: És molt recomanable donar permisos d'execució al final perquè funcionin
+    sudo chmod +x "$DESKTOP_DIR/Terminal.desktop"
+    sudo chmod +x "$DESKTOP_DIR/Firefox.desktop"
 }
     
 
@@ -69,7 +73,6 @@ colors(){
 xarxa(){
 echo "Només la xarxa Personal 1 que rep la IP per DHCP del Servidor- router"
 ip -c a
-
 }
 
 colors

@@ -1,12 +1,10 @@
 # Servidor DHCP
 Fem un servidor DHCP en un router amb ISC KEA.  
 ## Instal·lació
-Canvia el nom.  
-
-Actualitza i instal·la
 sudo apt update -y  
-sudo apt upgrade  
-sudo apt install kea-dhcp4-server  -no-install-recommends  
-sudo apt autoremove  
-
-
+sudo apt install git  
+git clone https://github.com/capbussat/isard-scripts
+cd isard-scripts
+cd servidor-dhcp
+chmod +x servidor-dhcp.sh
+./servidor-dhcp.sh

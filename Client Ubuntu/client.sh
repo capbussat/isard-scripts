@@ -1,5 +1,11 @@
 # Client Ubuntu Mate 24.04 Desktop
 
+# Activa la sortida immediata si qualsevol comanda llança un error
+set -e
+
+# Opcional: set -u (fa fallar l'script si utilitzes una variable no definida)
+set -u
+
 escriptori(){
     # 1. Detectar automàticament la ruta de l'escriptori (funciona en >
     if [ -d "$HOME/Escriptori" ]; then

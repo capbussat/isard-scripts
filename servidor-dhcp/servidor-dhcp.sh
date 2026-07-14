@@ -11,7 +11,7 @@ Aquest servidor serà el servidor principal.
 Hauria de tenir una connexio   
 enp1s0 default  
 enp2s0 Wireguard  
-enp3s0 Personal1
+enp3s0 Personal1 (servidor DHCP)
 enp4s0 Personal2 
 EOF
 
@@ -49,7 +49,7 @@ if [[ $tecla == [sS] ]]; then
 fi
 
 echo "..."
-read -n 1 -p "Comprovem que hi ha enp1s0 amb default enp2s0 wireguard-vpn i dues xarxes persona 1 i personal 2 sense ip. Seguim (s/n)?"  tecla  
+read -n 1 -p "Comprovem que hi ha enp1s0 amb default enp2s0 wireguard-vpn i dues xarxes Personal1 i Personal2 sense ip. Seguim (s/n)?"  tecla  
 if [[ $tecla == [sS] ]]; then
     ip -c address show
 fi 

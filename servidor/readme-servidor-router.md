@@ -51,10 +51,10 @@ sudo sysctl -p
 sudo nano /etc/systemd/resolved.conf
 
 ### Canvia aquests pràmetres per tenir accés al DNS 
-DNS=1.1.1.1
-DNSStubListenerExtra=10.10.10.1
-DNSStubListenerExtra=192.168.10.1
-ReadEtcHosts=yes
+DNS=1.1.1.1  
+DNSStubListenerExtra=10.10.10.1  
+DNSStubListenerExtra=192.168.10.1  
+ReadEtcHosts=yes  
 
 ### Pots posar el servidors locals com servidor.cat
 sudo nano /etc/hosts

@@ -1,0 +1,65 @@
+# dmz
+#!/usr/sbin/nft -f
+
+flush ruleset
+
+define WAN = enp1s0
+# enp2s0 és wireguard-vpn
+define LAN = enp3s0
+define DMZ = enp4s0
+define LAN_NET = 10.10.10.0/24
+define LAN_DMZ = 192.168.10.0/24
+
+table inet filter {
+	chain input {
+		type filter hook input priority filter; policy drop;;
+		
+		# conexiones establecidas/relacionadas
+		ct state established,related accept
+		ct state invalid drop
+		
+		# interfaz loopback
+		iif lo accept
+
+		# ICMP	
+		ip protocol icmp icmp type { echo-request, echo-reply } accept
+
+		# SSH (puerto 22)
+		tcp dport ssh accept
+
+		# HTTP (puertos 80 y 443)
+		iifname != $WAN tcp dport { 80, 443 } log prefix "LAN" accept
+	}
+
+	chain forward {
+		type filter hook forward priority filter; policy drop;
+
+		ct state established,related accept
+        ct state invalid drop
+
+		iifname { $LAN, $DMZ } oifname $WAN accept
+
+		# LAN pot veure DMZ
+		iifname $LAN oifname $DMZ accept
+		
+		# WAN accedeix al servidor DMZ
+		iifname $WAN oifname $DMZ ip daddr 192.168.10.2 tcp dport { 80, 443 } log prefix "WAN" accept
+
+	}
+
+	chain output {
+		type filter hook output priority filter; policy accept;
+	}
+}
+table ip nat {
+	 chain prerouting {
+        type nat hook prerouting priority -100; policy accept;
+        iifname $WAN tcp dport { 443, 80 } dnat to 192.168.10.2
+    }
+
+	chain postrouting {
+		type nat hook postrouting priority srcnat; policy accept;
+		oifname "enp1s0" ip saddr 10.10.10.0/24 masquerade
+		oifname "enp1s0" ip saddr 192.168.10.0/24 masque
+	}
+}

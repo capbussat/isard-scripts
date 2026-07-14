@@ -9,3 +9,5 @@ cd servidor-dhcp
 chmod +x servidor-dhcp.sh  
 ./servidor-dhcp.sh  
 
+Engega els clients després d'haver instal·lat el servidor DHCP.
+El client ha de tenir la xarxa Personal1.

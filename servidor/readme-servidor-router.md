@@ -10,30 +10,30 @@ ls
 ### Crea un dhcp en la xarxa 10.10.10.0/24 que comença per 10.10.10.101
 cat 10.network; cat 20.network; cat 30.network;
 
-[Match]
-Name=enp1s0
-[Network]
-DHCP=yes
+[Match]  
+Name=enp1s0  
+[Network]  
+DHCP=yes  
 
-[Match]
-Name=enp2s0
-[Network]
-DHCP=yes
+[Match]  
+Name=enp2s0  
+[Network]  
+DHCP=yes  
 
-[Match]
-Name=enp3s0
-[Network]
-DHCP=no
-Address=10.10.10.1/24
-DHCPServer=yes
-IPMasquerade=ipv4
-[DHCPServer]
-PoolOffset=100
-PoolSize=20
-DNS=1.1.1.1
-EmitDNS=yes
-EmitRouter=yes
-Router=10.10.10.1
+[Match]  
+Name=enp3s0  
+[Network]  
+DHCP=no  
+Address=10.10.10.1/24  
+DHCPServer=yes  
+IPMasquerade=ipv4  
+[DHCPServer]  
+PoolOffset=100  
+PoolSize=20  
+DNS=1.1.1.1  
+EmitDNS=yes  
+EmitRouter=yes  
+Router=10.10.10.1  
 
 ### Sistema administrat amb systemd-networkd
 sudo systemctl start systemd.networkd
@@ -53,6 +53,7 @@ sudo nano /etc/systemd/resolved.conf
 ### Canvia aquests pràmetres per tenir accés al DNS 
 DNS=1.1.1.1
 DNSStubListenerExtra=10.10.10.1
+DNSStubListenerExtra=192.168.10.1
 ReadEtcHosts=yes
 
 ### Pots posar el servidors locals com servidor.cat

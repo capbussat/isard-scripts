@@ -3,6 +3,6 @@
 sudo apt update -y && sudo apt install git  
 git clone https://github.com/capbussat/isard-scripts  
 cd isard-scripts  
-cd "Servidor-DMZ"  
+cd "servidor-dmz"  
 sudo chmod +x servidor-dmz.sh  
 ./servidor-dmz.sh  

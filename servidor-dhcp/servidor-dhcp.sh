@@ -9,7 +9,7 @@ cat << EOF
 Servidor DHCP (Ubuntu 24)
 Aquest servidor serà el servidor principal.  
 Hauria de tenir una connexio   
-enp1s0 default  
+enp1s0 Default  
 enp2s0 Wireguard  
 enp3s0 Personal1
 enp4s0 Personal2 
@@ -24,14 +24,15 @@ sudo apt autoremove
 }
 
 configure(){
-    if [ -f /etc/kea/kea-dhcp4.conf.bak  ]]; then
+    if [[ -f /etc/kea/kea-dhcp4.conf.bak  ]]; then
       echo "El fitxer de configuració ja existeix. No es sobre-escriu la còpia de seguretat."
     else 
-        sudo mv /etc/kea/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf.bak
+        sudo cp /etc/kea/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf.bak
     fi
-   sudo cat kea-dhcp4.conf > /etc/kea/kea-dhcp4.conf
+   sudo cp kea-dhcp4.conf  /etc/kea/kea-dhcp4.conf
    cat /etc/kea/kea-dhcp4.conf | jq '.'
    sudo systemctl restart kea-dhcp4-server
+   sudo systemctl enable kea-dhcp4-server
    sudo systemctl status kea-dhcp4-server
 }
 
@@ -53,6 +54,7 @@ router(){
     sudo cp nftables.conf /etc/nftables.conf
     sudo nft -f /etc/nftables.conf
     sudo systemctl restart nftables
+    sudo systemctl enable nftables
     sudo systemctl status nftables   
 }
 

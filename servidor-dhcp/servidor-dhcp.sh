@@ -11,16 +11,16 @@ Aquest servidor serà el servidor principal.
 Hauria de tenir una connexio   
 enp1s0 default  
 enp2s0 Wireguard  
-enp3s0 Personal1 (servidor DHCP)
+enp3s0 Personal1
 enp4s0 Personal2 
 EOF
 
 install(){  
-    sudo hostnamectl set-hostname "servidor-dhcp"
-    sudo apt update -y   
-    sudo apt upgrade  
-    sudo apt install kea-dhcp4-server 
-    sudo apt autoremove  
+sudo hostnamectl set-hostname "servidor-dhcp"
+sudo apt update -y   
+sudo apt upgrade  
+sudo apt install kea-dhcp4-server 
+sudo apt autoremove  
 }
 
 configure(){
@@ -42,28 +42,45 @@ network(){
     sudo netplan apply
 }
 
-read -n 1 -p "Actulitza i instal·lació del paquets del servidor KEA DHCP? (s/n)" tecla
-if [[ $tecla == [sS] ]]; then
-    echo ""
-    install
-fi
+router(){
+    echo "Configurant IP forwarding..."
+    echo "net.ipv4.ip_forward=1" | sudo tee /etc/sysctl.d/99-ipforward.conf
+    sudo sysctl --system
 
-echo "..."
-read -n 1 -p "Comprovem que hi ha enp1s0 amb default enp2s0 wireguard-vpn i dues xarxes Personal1 i Personal2 sense ip. Seguim (s/n)?"  tecla  
-if [[ $tecla == [sS] ]]; then
-    ip -c address show
-fi 
-echo "..."
+    echo "Instal·lant paquets nftables..."
+    sudo apt update -y && sudo apt install  nftables
+    echo "Aplicant la configuració de nftables..."
+    sudo cp nftables.conf /etc/nftables.conf
+    sudo nft -f /etc/nftables.conf
+    sudo systemctl restart nftables
+    sudo systemctl status nftables   
+}
 
-read -n 1 -p "Actualitza la xarxa (s/n)?" tecla
-if [[ $tecla == [sS] ]]; then
-    network
-fi
-echo "..."
+mostra_xarxa(){
+    echo "Mostrant la configuració de xarxa..."
+    ip -c addr show
+    echo "Mostrant les rutes..."
+    ip -c route show
+}
+
+demanar_confirmacio (){
+    echo 
+    read -n 1 -p "$1" tecla    
+    if [[ $tecla == [sS] ]]; then
+        echo "..."
+        "$2"
+    fi
+}
 
 
-read -n 1 -p "Configura DHCP4 a la xarxa personal 1 (enp3s0). Seguim (s/n)?" tecla
-if [[ $tecla == [sS] ]]; then
-    configure
-fi
+demanar_confirmacio  "Actulitza i instal·la els paquets del servidor KEA DHCP? (s/n)" install
+
+demanar_confirmacio  "Comprova enp1s0 per Default, enp2s0 Wireguard-VPN, i dues xarxes Personal1 i Personal2 sense ip. Seguim (s/n)?" mostra_xarxa
+
+demanar_confirmacio  "Configura la xarxa (s/n)?" network
+
+demanar_confirmacio  "Configura el servidor DHCP (s/n)?" configure
+
+demanar_confirmacio  "Configura el router (s/n)?" router
+
 echo "Configuració completa."

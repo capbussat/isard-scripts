@@ -3,7 +3,8 @@ cat << EOF
 Servidor DMZ (Debian Server 13)
 Aquest servidor estarà connectat al Servidor-router.
 Hauria de tenir una connexio enp1s0 Wireguard
-La connexió enp2s0 serà Manual. Tindrà una xarxa interna 192.168.12.0/24.
+La connexió enp2s0 serà Manual. Tindrà una xarxa interna Personal2 amb adreça de xarxa 192.168.12.0/24.
+(És important que la xarxa sigui diferent de la definida amb servidor-dhcp, que és Personal1. Així el servidor-dmz és a Personal2 i és compatible amb el servidor-dhcp)
 La IP manual del servidor DMZ és 192.168.12.2/24.
 La xarxa està configurada amb Network Manager o nmtui?"
 EOF

@@ -1,39 +1,46 @@
 #!/bin/bash
+
+set -eup
+
 cat << EOF
 Servidor DMZ (Debian Server 13)
-Aquest servidor estarà connectat al Servidor-router.
-Hauria de tenir una connexio enp1s0 Wireguard
-La connexió enp2s0 serà Manual. Tindrà una xarxa interna Personal2 amb adreça de xarxa 192.168.12.0/24.
-(És important que la xarxa sigui diferent de la definida amb servidor-dhcp, que és Personal1. Així el servidor-dmz és a Personal2 i és compatible amb el servidor-dhcp)
-La IP manual del servidor DMZ és 192.168.12.2/24.
-La xarxa està configurada amb Network Manager o nmtui?"
+Aquest servidor estarà connectat al Servidor-router dhcp.
+Hauria de tenir una connexio enp1s0 Default
+La connexií enp2s0 serà Wiregua-VPN.
+La connexió enp3s0 serà estàtica. adreça de xarxa 192.168.12.0/24 en la xarxa Personal2.
+És important que la xarxa sigui la Personal2 diferent de la Personal1 on hi ha el dhcp.
 EOF
-echo "systemctl is-active NetworkManager"
-systemctl is-active NetworkManager 
-echo "systemctl is-active systemd-networkd"
-systemctl is-active systemd-networkd 
-read -n 1  -p "Comprovem les connexions prem qualsevol tecla CTRL + C per sortir" tecla
-ECHO "la connexió \"internet\" és enp2s0 amb Address=192.168.12.2 Gateway=192.168.12.1 i DNS=1.1.1.1?"
-nmcli connection show
-read -n 1  -p "Prem qualsevol tecla per continuar CTRL + C per sortir" tecla
-sudo nmcli connection modify "internet" connection.interface-name enp2s0;
-sudo nmcli connection modify "internet" ipv4.addresses 192.168.12.2/24 ipv4.gateway 192.168.12.1 ipv4.dns 1.1.1.1;
-sudo nmcli connection up "internet";
 
-echo "Actualitza i instal·la Nginx"
-read -n 1  -p "Prem qualsevol tecla per continuar CTRL + C per sortir" tecla
-sudo apt update -y && sudo apt upgrade
-sudo apt install nginx
-sudo apt autoremove
+demanar_confirmacio (){
+    echo 
+    read -n 1 -p "$1" tecla    
+    if [[ $tecla == [sS] ]]; then
+        echo "..."
+        "$2"
+    fi
+}
 
-echo "Comprova  nginx"
-sudo systemctl status nginx
+xarxa(){
+    sudo ip address add 192.168.12.2/24 dev enp3s0
+    sudo ip route add 192.168.12.0/24 via 192.168.12.1
+    ip -c address show
+}
 
-echo "Comprova ping 192.168.12.1 gateway"
+nginx(){
+    echo "Actualitza i instal·la Nginx"
+    sudo apt update -y && sudo apt upgrade
+    sudo apt install nginx
+    sudo apt autoremove
+    echo "Comprova  nginx"
+    sudo systemctl status nginx
+}
+
+
+demanar_confirmacio  "Vols configurar la xarxa? (s/n)" xarxa
+demanar_confirmacio  "Vols instal·lar Nginx? (s/n)" nginx
+
+
+echo "Comprova el gateway"
 ping -c 4 192.168.12.1
-echo "Comprova  ping 10.10.10.1 router, per l'altra xarxa"
-ping -c 4 10.10.10.1
-echo "Comprova accés a internet"
+echo "Comprova l'accés a internet"
 ping -c 4 1.1.1.1
-echo "Comprova  ping 10.10.10.111 ( que no pots arribar a la LAN)"
-ping -c 4 10.10.10.111

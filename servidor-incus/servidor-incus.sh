@@ -7,10 +7,30 @@ set -eu
 cat << EOF
 Servidor Incus (Ubuntu 24)
 Instal·lació i configuració de l'entorn de virtualització Incus (LXD) en Ubuntu 24.04 LTS
-Instal·lació /esborrat del conetenidor.
-Afegir servidor Zammad en el contenidor (Ticket desk).
+enp1s0 xarxa Default
+enp2s0 Xarxa Wireguard-VPN
+enp3s0 xarxa LAN Personal1
 EOF
 
+seguim(){
+    read -n 1 -p "$1" tecla
+    if [[ $tecla == [sS] ]]; then
+        echo            
+        echo "Sortint de l'script."
+        exit 1
+    else 
+        echo "..."
+    fi  
+}
+
+demana_confirmacio (){
+    echo 
+    read -n 1 -p "$1" tecla    
+    if [[ $tecla == [sS] ]]; then
+        echo "..."
+        "$2"
+    fi
+}
 
 install(){
     echo "Instal·lant Incus (LXD)..."
@@ -65,19 +85,18 @@ install_zammad(){
 }
 
 proxy_incus(){
-    incus config device add mycontainer http proxy listen=tcp:0.0.0.0:80 connect=tcp:127.0.0.1:80
-    incus config device add mycontainer https proxy listen=tcp:0.0.0.0:443 connect=tcp:127.0.0.1:443
+    ip_addr="127.0.0.1"
+    incus config device remove mycontainer http 
+    incus config device remove mycontainer https 
+    incus config device add mycontainer http proxy listen=tcp:0.0.0.0:80 connect=tcp:${ip_addr}:80
+    incus config device add mycontainer https proxy listen=tcp:0.0.0.0:443 connect=tcp:${ip_addr}:443
+    ip_wireguard=$(ip -4 -o addr show enp2s0 | awk '{print $4}' | cut -d/ -f1)
+    echo "Accedeix a Zammad a la IP de Wireguard-VPN:"
+    echo "$ip_wireguard"
 }
 
 
-demana_confirmacio (){
-    echo 
-    read -n 1 -p "$1" tecla    
-    if [[ $tecla == [sS] ]]; then
-        echo "..."
-        "$2"
-    fi
-}
+seguim "Vols acabar (s/n)? "
 
 demana_confirmacio "Vols instal·lar Incus (LXD)? (s/n): " install
 

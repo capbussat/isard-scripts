@@ -1,6 +1,6 @@
 # Incus
 Provat en Ubuntu 24.04 Server.  
-Preparat per afegir zammad al contenidor.
+Preparat per afegir Zammad (ticket desk software)  al contenidor.
 Servidor Incus (Ubuntu 24)
 Instal·lació i configuració de l'entorn de virtualització Incus (LXD) en Ubuntu 24.04 LTS  
 enp1s0 xarxa Default  

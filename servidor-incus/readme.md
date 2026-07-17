@@ -1,7 +1,11 @@
 # Incus
 Provat en Ubuntu 24.04 Server.  
 Preparat per afegir zammad al contenidor.
-
+Servidor Incus (Ubuntu 24)
+Instal·lació i configuració de l'entorn de virtualització Incus (LXD) en Ubuntu 24.04 LTS  
+enp1s0 xarxa Default  
+enp2s0 Xarxa Wireguard-VPN  
+enp3s0 xarxa LAN Personal1  
 
 ## Abans de res
 

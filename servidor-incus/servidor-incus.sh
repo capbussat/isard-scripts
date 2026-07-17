@@ -67,7 +67,7 @@ install_zammad(){
     incus exec mycontainer -- bash -c  "gpg --show-keys /usr/share/keyrings/elasticsearch-keyring.gpg"
     incus exec mycontainer -- bash -c  "chmod 644 /usr/share/keyrings/elasticsearch-keyring.gpg"
     echo "Add the Elasticsearch APT Repository"
-    incus exec mycontainer -- bash -c  "echo \"deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main\" |  /etc/apt/sources.list.d/elastic-9.x.list"
+    incus exec mycontainer -- bash -c  "echo \"deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main\" | tee /etc/apt/sources.list.d/elastic-9.x.list"
     echo "Install Elasticsearch"
     incus exec mycontainer -- bash -c  "apt update -y && apt install -y elasticsearch"
     echo "Enable and Start Elasticsearch ... triga una mica"

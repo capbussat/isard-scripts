@@ -22,6 +22,6 @@ sudo apt update -y && sudo apt install git -y
 git clone https://github.com/capbussat/isard-scripts  
 cd isard-scripts   
 cd servidor-zabbix    
-sudo chmod + servidor-zabbix.sh    
+sudo chmod +x servidor-zabbix.sh    
 ./servidor-zabbix.sh  
 

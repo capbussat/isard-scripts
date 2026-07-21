@@ -39,19 +39,14 @@ sudo mysql -ppirineus
 
 configure_mysql(){  
 echo "Configure MySQL database..."    
-read -sp "Crea una contrasenya root MySQL: " ROOT_PASS
-echo
+echo "Les dues contrasenyes són pirineus"
 DB_PASS="pirineus"
 ROOT_PASS="pirineus"
-mysql -uroot -ppirineus << EOF  
-CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;  
-CREATE USER zabbix@localhost IDENTIFIED BY '${DB_PASS}';  
-GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;  
-SET GLOBAL log_bin_trust_function_creators = 1;  
-EOF  
+mysql -uroot -p -e "CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin; CREATE USER zabbix@localhost IDENTIFIED BY zabbix; "
+mysql -uroot -p -e  "GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost; SET GLOBAL log_bin_trust_function_creators = 1;"
 
-echo "Inicialitza l'esquema de la BD. Entra la nova contrasenya que has creat. "
-sudo zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -p zabbix 
+echo "Inicialitza l'esquema de la BD. Entra la contrasenya de sudo , si és necesssari. Trigarà. "
+sudo zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -pzabbix zabbix 
 echo "Desactiva aquet permís per usuaris sense el privilegi..."
 sudo mysql -uroot -p
 cat << EOF

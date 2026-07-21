@@ -1,5 +1,5 @@
 # Servidor Zabbix 
-Debian 12 Server
+Debian 13 Server
 
 enp1s0 Default  
 enp2s0 Wireguard-vpn  

@@ -47,12 +47,10 @@ mysql -uroot -p -e  "GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost; SET G
 
 echo "Inicialitza l'esquema de la BD. Entra la contrasenya de sudo , si és necesssari. Trigarà. "
 sudo zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -pzabbix zabbix 
+
 echo "Desactiva aquet permís per usuaris sense el privilegi..."
-sudo mysql -uroot -p
-cat << EOF
-set global log_bin_trust_function_creators = 0;
-quit;
-EOF
+sudo mysql -uroot -p -e "set global log_bin_trust_function_creators = 0;"
+
 echo "Segueix la configuració del fitxer ..."
 CONF=/etc/zabbix/zabbix_server.conf
 echo "$CONF"

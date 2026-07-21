@@ -25,8 +25,8 @@ demanar_confirmacio (){
 
 install_zabbix(){
 echo "Install Zabbix"
-wget https://repo.zabbix.com/zabbix/7.4/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.4+debian12_all.deb  
-sudo dpkg -i zabbix-release_latest_7.4+debian12_all.deb  
+wget https://repo.zabbix.com/zabbix/7.4/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.4+debian13_all.deb  
+dpkg -i zabbix-release_latest_7.4+debian13_all.deb  
 sudo apt update -y    
 sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent  
 }

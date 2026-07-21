@@ -53,6 +53,8 @@ sudo mysql -uroot -p -e "set global log_bin_trust_function_creators = 0;"
 start_service(){
 Echo "Segueix la configuració del fitxer /etc/zabbix/zabbix_server.conf"
 echo "Afegeix la línia DBPassword=${DB_PASS}"
+echo "L'usuari administrador serà Admin/zabbix"
+read -n 1 -p "Prem una tecla qualsevol " tecla
 sudo nano /etc/zabbix/zabbix_server.conf
 systemctl restart zabbix-server zabbix-agent apache2
 systemctl enable zabbix-server zabbix-agent apache2 

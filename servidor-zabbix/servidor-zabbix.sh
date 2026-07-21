@@ -47,9 +47,10 @@ CREATE USER zabbix@localhost IDENTIFIED BY '${DB_PASS}';
 GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;  
 SET GLOBAL log_bin_trust_function_creators = 1;  
 EOF  
+
 echo "Inicialitza l'esquema de la BD. Entra la nova contrasenya que has creat. "
 sudo zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -p zabbix 
-echo "Canvia aquesta configuració ..."
+echo "Desactiva aquet permís per usuaris sense el privilegi..."
 sudo mysql -uroot -p
 cat << EOF
 set global log_bin_trust_function_creators = 0;
@@ -67,6 +68,12 @@ else
 fi
 }
 
+start_service(){
+systemctl restart zabbix-server zabbix-agent apache2
+systemctl enable zabbix-server zabbix-agent apache2 
+}
+
 demanar_confirmacio "Vols instal·lar Zabbix?" install_zabbix
 demanar_confirmacio "Vols instal·lar MySQL?" install_mysql
 demanar_confirmacio "Vols instal·lar MySQL?" configure_mysql
+demanar_confirmacio "Vols engegar el servei?" start_service

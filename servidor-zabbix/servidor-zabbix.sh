@@ -47,6 +47,22 @@ CREATE USER zabbix@localhost IDENTIFIED BY '${DB_PASS}';
 GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;  
 SET GLOBAL log_bin_trust_function_creators = 1;  
 EOF  
+echo "On Zabbix server host import initial schema and data. You will be prompted to enter your newly created password. "
+sudo zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -p zabbix 
+sudo mysql -uroot -p
+cat << EOF
+set global log_bin_trust_function_creators = 0;
+quit;
+EOF
+echo "Segueix la configuració ..."
+CONF=/etc/zabbix/zabbix_server.conf
+if grep -q "^DBPassword=" "$CONF"; then
+    sed -i "s/^DBPassword=.*/DBPassword=${DB_PASS}/" "$CONF"
+elif grep -q "^# DBPassword=" "$CONF"; then
+    sed -i "s/^# DBPassword=.*/DBPassword=${DB_PASS}/" "$CONF"
+else
+    echo "DBPassword=${DB_PASS}" >> "$CONF"
+fi
 }
 
 demanar_confirmacio "Vols instal·lar Zabbix?" install_zabbix

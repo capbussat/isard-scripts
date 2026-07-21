@@ -26,7 +26,7 @@ demanar_confirmacio (){
 install_zabbix(){
 echo "Install Zabbix"
 wget https://repo.zabbix.com/zabbix/7.4/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.4+debian13_all.deb  
-dpkg -i zabbix-release_latest_7.4+debian13_all.deb  
+sudo dpkg -i zabbix-release_latest_7.4+debian13_all.deb  
 sudo apt update -y    
 sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent  
 }
@@ -34,6 +34,7 @@ sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabb
 install_mysql(){
 echo "Instal·la MySQL database..."    
 sudo apt install mariadb-server mariadb-client
+mysql -v 
 }
 
 configure_mysql(){  
@@ -41,7 +42,7 @@ echo "Configure MySQL database..."
 read -sp "Crea una contrasenya root MySQL: " ROOT_PASS
 echo
 DB_PASS="pirineus"  
-sudo mysql -uroot -p"$ROOT_PASS" << EOF  
+mysql -uroot -p"$ROOT_PASS" << EOF  
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;  
 CREATE USER zabbix@localhost IDENTIFIED BY '${DB_PASS}';  
 GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;  

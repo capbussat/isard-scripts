@@ -23,7 +23,7 @@ demanar_confirmacio (){
     fi
 }
 
-install(){
+install_zabbix(){
 echo "Install Zabbix"
 wget https://repo.zabbix.com/zabbix/7.4/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.4+debian12_all.deb  
 dpkg -i zabbix-release_latest_7.4+debian12_all.deb  
@@ -31,8 +31,12 @@ apt update -y
 apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent  
 }
 
-database(){  
-echo "Install MySQL database..."    
+install_mysql(){
+echo "Instal·la MySQL database..."    
+}
+
+configure_mysql(){  
+echo "Configure MySQL database..."    
 read -sp "Crea una contrasenya root MySQL: " ROOT_PASS
 echo
 DB_PASS='password'  
@@ -44,3 +48,6 @@ SET GLOBAL log_bin_trust_function_creators = 1;
 EOF  
 }
 
+demanar_confirmacio "Vols instal·lar Zabbix?" install_zabbix
+demanar_confirmacio "Vols instal·lar MySQL?" install_mysql
+demanar_confirmacio "Vols instal·lar MySQL?" configure_mysql

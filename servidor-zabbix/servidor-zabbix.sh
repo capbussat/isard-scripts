@@ -44,26 +44,16 @@ DB_PASS="pirineus"
 ROOT_PASS="pirineus"
 mysql -uroot -p -e "CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin; CREATE USER zabbix@localhost IDENTIFIED BY zabbix; "
 mysql -uroot -p -e  "GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost; SET GLOBAL log_bin_trust_function_creators = 1;"
-
 echo "Inicialitza l'esquema de la BD. Entra la contrasenya de sudo , si és necesssari. Trigarà. "
 sudo zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -pzabbix zabbix 
-
 echo "Desactiva aquet permís per usuaris sense el privilegi..."
 sudo mysql -uroot -p -e "set global log_bin_trust_function_creators = 0;"
-
-echo "Segueix la configuració del fitxer ..."
-CONF=/etc/zabbix/zabbix_server.conf
-echo "$CONF"
-if grep -q "^DBPassword=" "$CONF"; then
-    sed -i "s/^DBPassword=.*/DBPassword=${DB_PASS}/" "$CONF"
-elif grep -q "^# DBPassword=" "$CONF"; then
-    sed -i "s/^# DBPassword=.*/DBPassword=${DB_PASS}/" "$CONF"
-else
-    echo "DBPassword=${DB_PASS}" >> "$CONF"
-fi
 }
 
 start_service(){
+Echo "Segueix la configuració del fitxer /etc/zabbix/zabbix_server.conf"
+echo "Afegeix la línia DBPassword=${DB_PASS}"
+sudo nano /etc/zabbix/zabbix_server.conf
 systemctl restart zabbix-server zabbix-agent apache2
 systemctl enable zabbix-server zabbix-agent apache2 
 }

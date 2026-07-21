@@ -19,7 +19,7 @@ Ves a la url <servidor-zabbix-ip>/zabbix per veure el tauler.
 
 ### Abans de res:  
 sudo apt update -y && sudo apt install git -y  
-git clone https://github.com/capbussat/servidor-zabbix  
+git clone https://github.com/capbussat/isard-scripts  
 sudo chmod + servidor-zabbix.sh  
 ./servidor-zabbix.sh  
 

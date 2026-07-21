@@ -33,13 +33,14 @@ apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sq
 
 database(){  
 echo "Install MySQL database..."    
-local DB_PASS='password'  
-mysql -uroot -p"$ROOT_PASS" <<EOF  
+read -sp "Crea una contrasenya root MySQL: " ROOT_PASS
+echo
+DB_PASS='password'  
+mysql -uroot -p"$ROOT_PASS" << EOF  
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;  
 CREATE USER zabbix@localhost IDENTIFIED BY '${DB_PASS}';  
 GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;  
 SET GLOBAL log_bin_trust_function_creators = 1;  
 EOF  
-
-
 }
+

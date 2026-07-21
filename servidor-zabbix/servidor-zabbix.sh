@@ -40,23 +40,24 @@ configure_mysql(){
 echo "Configure MySQL database..."    
 read -sp "Crea una contrasenya root MySQL: " ROOT_PASS
 echo
-DB_PASS='password'  
+DB_PASS="pirineus"  
 sudo mysql -uroot -p"$ROOT_PASS" << EOF  
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;  
 CREATE USER zabbix@localhost IDENTIFIED BY '${DB_PASS}';  
 GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;  
 SET GLOBAL log_bin_trust_function_creators = 1;  
 EOF  
-echo "On Zabbix server host import initial schema and data. You will be prompted to enter your newly created password. "
+echo "Inicialitza l'esquema de la BD. Entra la nova contrasenya que has creat. "
 sudo zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -p zabbix 
+echo "Canvia aquesta configuració ..."
 sudo mysql -uroot -p
 cat << EOF
 set global log_bin_trust_function_creators = 0;
 quit;
 EOF
+echo "Segueix la configuració del fitxer ..."
 CONF=/etc/zabbix/zabbix_server.conf
-echo "Segueix la configuració de $CONF ..."
-
+echo "$CONF"
 if grep -q "^DBPassword=" "$CONF"; then
     sed -i "s/^DBPassword=.*/DBPassword=${DB_PASS}/" "$CONF"
 elif grep -q "^# DBPassword=" "$CONF"; then

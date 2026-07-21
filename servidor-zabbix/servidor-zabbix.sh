@@ -54,8 +54,9 @@ cat << EOF
 set global log_bin_trust_function_creators = 0;
 quit;
 EOF
-echo "Segueix la configuració ..."
 CONF=/etc/zabbix/zabbix_server.conf
+echo "Segueix la configuració de $CONF ..."
+
 if grep -q "^DBPassword=" "$CONF"; then
     sed -i "s/^DBPassword=.*/DBPassword=${DB_PASS}/" "$CONF"
 elif grep -q "^# DBPassword=" "$CONF"; then

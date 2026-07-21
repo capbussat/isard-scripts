@@ -34,15 +34,16 @@ sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabb
 install_mysql(){
 echo "Instal·la MySQL database..."    
 sudo apt install mariadb-server mariadb-client
-mysql -v 
+sudo mysql -ppirineus 
 }
 
 configure_mysql(){  
 echo "Configure MySQL database..."    
 read -sp "Crea una contrasenya root MySQL: " ROOT_PASS
 echo
-DB_PASS="pirineus"  
-mysql -uroot -p"$ROOT_PASS" << EOF  
+DB_PASS="pirineus"
+ROOT_PASS="pirineus"
+mysql -uroot -ppirineus << EOF  
 CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;  
 CREATE USER zabbix@localhost IDENTIFIED BY '${DB_PASS}';  
 GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;  

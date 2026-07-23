@@ -6,9 +6,9 @@ cat << EOF
 Servidor DMZ (Debian Server 13)
 Aquest servidor estarà connectat al Servidor-router dhcp.
 Hauria de tenir una connexio enp1s0 Default
-La connexií enp2s0 serà Wiregua-VPN.
-La connexió enp3s0 serà estàtica. adreça de xarxa 192.168.12.0/24 en la xarxa Personal2.
-És important que la xarxa sigui la Personal2 diferent de la Personal1 on hi ha el dhcp.
+La connexió enp2s0 serà Wireguard-VPN.
+La connexió enp3s0 serà estàtica. L'adreça de xarxa serà 192.168.12.0/24 en la xarxa Personal2.
+És important que la xarxa sigui la Personal2 diferent de la Personal1 on hi ha el servidor dhcp.
 EOF
 
 demanar_confirmacio (){

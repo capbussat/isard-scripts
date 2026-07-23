@@ -1,13 +1,16 @@
 # Servidor Zabbix 
-Debian 13 Server
-
-enp1s0 Default  
-enp2s0 Wireguard-vpn  
-enp2s0  Personal1  
 
 ## Zabbix 
 Zabbix és una plataforma de monitorització de codi obert per a xarxes, servidors, màquines virtuals i serveis en el núvol.   
 Recull mètriques a través de SNMP, IPMI, JMX i agents personalitzats, a continuació, emmagatzema les dades en una base de dades relacional i proporciona alerta, visualització i informes a través d'un frontend basat en web.
+
+S'ha provat en Debian 13 Server.  
+La xarxa seria:
+- enp1s0 Default  
+- enp2s0 Wireguard-vpn  
+- enp2s0  Personal1
+
+Complementa amb el client Zabbix. 
 
 ## Install Zabbix
 Pots escollir les opcions en la seva web i baixar-te els scripts. Aqui amb Mariadb i Apache.

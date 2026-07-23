@@ -10,10 +10,10 @@ ROOT_PASS="pirineus"
 
 cat << EOF  
 Instal·lació del servidor Zabbix.  
-Assegur't que tens la configuració de xarxa següent:
-enp1s0 default
-enp2s0 Wireguard-VPN
-enp3s0 Personal1 
+Assegura't que tens la configuració de xarxa següent:
+- enp1s0 default
+- enp2s0 Wireguard-VPN
+- enp3s0 Personal1 
 EOF
 ip -c address show
 
@@ -27,11 +27,13 @@ demanar_confirmacio (){
 }
 
 install_zabbix(){
-echo "Install Zabbix"
+echo "Descarrega Zabbix ..."  
 wget https://repo.zabbix.com/zabbix/7.4/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.4+debian13_all.deb  
+echo "Install Zabbix"  
 sudo dpkg -i zabbix-release_latest_7.4+debian13_all.deb  
 sudo apt update -y    
 sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent  
+sudo apt autoremove
 }
 
 install_mysql(){
@@ -43,7 +45,7 @@ sudo mysql -ppirineus
 configure_mysql(){  
 echo "Configure MySQL database..."    
 echo "Les dues contrasenyes són pirineus"
-# Si poso -uroot, no sé perquè necessita sudo "
+echo "Si poso -uroot, no sé perquè necessita sudo "  
 sudo mysql -uroot -p -e "CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin; CREATE USER zabbix@localhost IDENTIFIED BY zabbix; "
 sudo mysql -uroot -p -e  "GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost; SET GLOBAL log_bin_trust_function_creators = 1;"
 echo "Inicialitza l'esquema de la BD zabbix. Entra la contrasenya de sudo, si és necesssari. Trigarà. "

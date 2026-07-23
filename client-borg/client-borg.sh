@@ -2,7 +2,7 @@
 # client-borg.sh
 set -peu
 
-export BORG_REPO=ssh://isard@192.168.10.1:22/~/.backups/
+export BORG_REPO="ssh://isard@192.168.10.1:22/~/.backups/"
 
 seguim(){
     read -n 1 -p "$1" tecla
@@ -43,6 +43,7 @@ echo "Crea el directori remot"
 ssh isard@192.168.10.1 "mkdir -p ~/.backups" 
 ssh isard@192.168.10.1 "mkdir -p -m 700 ~/.backups" 
 ssh isard@192.168.10.1 "ls -la ~/.backups"
+ssh isard@192.168.10.1 "borg init --encryption=repokey ~/.backups"
 }
 
 borg_install(){
@@ -58,7 +59,7 @@ borg list check
 }
 
 demana_confirmacio "Vols crear claus SSH? (s/n)" ssh_keys
-demana_confirmacio "Vols provar les claus SSH? (s/n)" ssh_check
 demana_confirmacio "Vols instal·lar Borg backup? (s/n)" borg_install
+demana_confirmacio "Vols provar les claus SSH? (s/n)" ssh_check
 demana_confirmacio "Vols provar Borg backup (s/n)?"  borg_check
 check

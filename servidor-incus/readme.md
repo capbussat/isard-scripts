@@ -22,8 +22,8 @@ incus exec -- bash -c "pwd"
 incus shell mycontainer  
 
 ### Snapshots
-Algunes comandes:
+Algunes comandes:  
  incus snapshot create mycontainer snapshot1  
- incus snapshot list mycontainer
- incus snapshot restore mycontainer snapsho1
+ incus snapshot list mycontainer  
+ incus snapshot restore mycontainer snapsho1  
  incus snapshot delete mycontainer snapshot1  

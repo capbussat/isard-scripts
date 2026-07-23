@@ -1,5 +1,6 @@
 # Client Ubuntu Mate desktop
-Configura alguns aspectes del terminal, fons d'escriptori i posa accessos a Firefox i al terminal a l'escriptori.
+Configura alguns aspectes del terminal, fons d'escriptori i posa accessos a Firefox i al terminal a l'escriptori.  
+Només xarxa Personal1.
 
 ## Abans de res ...
 sudo apt update -y && sudo apt install git  

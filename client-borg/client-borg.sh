@@ -49,7 +49,7 @@ sudo apt autoremove
 }
 
 borg_check(){
-BORG_REPO="ssh://${SSH_USERNAME}@1${SSH_REPO_ADDRESS}:${SSH_REPO_PORT}/~/.backups/"
+BORG_REPO="ssh://${SSH_USERNAME}@${SSH_REPO_ADDRESS}:${SSH_REPO_PORT}/~/.backups/"
 touch checkborg.txt
 borg create $BORG_REPO::check checkborg.txt
 borg list check

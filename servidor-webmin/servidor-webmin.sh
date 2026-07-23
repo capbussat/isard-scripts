@@ -8,5 +8,5 @@ sudo apt-get install webmin --install-recommends
 sudo apt autoremove  
 echo " Canvia la contrasenya per root:"  
 sudo webmin passwd root 
-echo "Podeu accedir a la seva interfície introduint firefox localhost:10000 usuari root"  
-echo "Crea els grups i i usaris necessaris"    
+echo "Podeu accedir a la seva interfície introduint firefox localhost:10000 usuari:root amb la contrasenya que has creat."  
+echo "Crea els grups i i usuaris necessaris."    

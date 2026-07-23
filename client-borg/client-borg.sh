@@ -6,6 +6,11 @@ SSH_USERNAME="isard"
 SSH_REPO_ADDRESS='192.168.10.1'
 SSH_REPO_PORT="22"
 
+cat<<EOF
+Usa Borg Backup per fer backups remots amb l'usuari ${SSH_USERNAME} 
+en el servidor ${SSH_REPO_ADDRESS}:${SSH_REPO_PORT} en el directori ~/.backups
+EOF
+
 demana_confirmacio (){
     echo 
     read -n 1 -p "$1" tecla    

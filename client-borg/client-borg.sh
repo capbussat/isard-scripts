@@ -8,7 +8,7 @@ SSH_REPO_PORT="22"
 
 
 cat<<EOF
-Usa Borg Backup per fer backups remots
+Usa Borg Backup per fer backups remots amb l'usuari ${SSH_USERNAME} en el servidor ${SSH_REPO_ADDRESS}:${SSH_REPO_PORT}"
 EOF
 
 demana_confirmacio (){

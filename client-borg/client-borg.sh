@@ -2,18 +2,14 @@
 # client-borg.sh
 set -peu
 
-export BORG_REPO="ssh://isard@192.168.10.1:22/~/.backups/"
+SSH_USERNAME="isard"
+SSH_REPO_ADDRESS='192.168.10.1'
+SSH_REPO_PORT="22"
 
-seguim(){
-    read -n 1 -p "$1" tecla
-    if [[ $tecla == [sS] ]]; then
-        echo            
-        echo "Sortint de l'script."
-        exit 1
-    else 
-        echo "..."
-    fi  
-}
+
+cat<<EOF
+Usa Borg Backup per fer backups remots
+EOF
 
 demana_confirmacio (){
     echo 
@@ -53,6 +49,7 @@ sudo apt autoremove
 }
 
 borg_check(){
+BORG_REPO="ssh://${SSH_USERNAME}@1${SSH_REPO_ADDRESS}:${SSH_REPO_PORT}/~/.backups/"
 touch checkborg.txt
 borg create $BORG_REPO::check checkborg.txt
 borg list check

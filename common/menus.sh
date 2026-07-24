@@ -4,7 +4,9 @@
 # menu per seleccionar opcions de l'usuari; exemple en client-borg
 mostra_menu() {
     echo "Selecciona opcions (ex: 1 3 4), o 'a' per totes:"
+    # claus de l'array !MENU_ITEMS[@]
     for i in "${!MENU_ITEMS[@]}"; do
+        # talla el text des de l'inici fins els dos punts #*:
         printf "  %d) %s\n" "$((i+1))" "${MENU_ITEMS[$i]#*:}"
     done
 }
@@ -22,6 +24,8 @@ executa_seleccio() {
     fi
 
     for i in "${!MENU_ITEMS[@]}"; do
+        # triades[$i]:-  dona el valor triades[$i] o la cadena en blanc
+        # %%:* treu la segona part darrera dels dos punts
         [[ -n "${triades[$i]:-}" ]] && "${MENU_ITEMS[$i]%%:*}"
     done
 }

@@ -1,7 +1,9 @@
 #!/bin/bash
 # common/menu.sh
 # Compatible amb 'set -euo pipefail'
-# menu per seleccionar opcions de l'usuari; exemple en client-borg
+# Dues funcions una mostra el menu i l'altre permet seleccionar diverses opcions de l'usuari però les executa en l'ordre predeterminat; 
+# l'exemple d'ús és en client-borg/client-borg.sh
+
 mostra_menu() {
     echo "Selecciona opcions (ex: 1 3 4), o 'a' per totes:"
     # claus de l'array !MENU_ITEMS[@]

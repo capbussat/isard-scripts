@@ -1,64 +1,62 @@
 #!/bin/bash
 # client-borg.sh
-set -peu
+# surt del script al primer error
+set -euo pipefail
 
 SSH_USERNAME="isard"
 SSH_REPO_ADDRESS='192.168.10.1'
 SSH_REPO_PORT="22"
+BORG_REPO="ssh://${SSH_USERNAME}@${SSH_REPO_ADDRESS}:${SSH_REPO_PORT}/~/.backups"
 
 cat<<EOF
 Usa Borg Backup per fer backups remots amb l'usuari ${SSH_USERNAME} 
-en el servidor ${SSH_REPO_ADDRESS}:${SSH_REPO_PORT} en el directori ~/.backups
+en el servidor ${SSH_REPO_ADDRESS}:${SSH_REPO_PORT} creant un directori remot ~/.backups
 EOF
 
-demana_confirmacio (){
-    echo 
-    read -n 1 -p "$1" tecla    
-    if [[ $tecla == [sS] ]]; then
-        echo "..."
-        "$2"
-    fi
-}
-
 ssh_keys(){
-echo "Crea i copia les claus SSH"
-ssh-keygen -t ed25519
-ssh-copy-id isard@192.168.10.1
+    echo "Crea i copia les claus SSH en el remot ..."
+    ssh-keygen -t ed25519
+    ssh-copy-id "${SSH_USERNAME}@${SSH_REPO_ADDRESS}"
 }
 
-ssh_check(){
-echo "Comprova l'accés"
-ssh isard@192.168.10.1
-echo "Crea el directori remot"
-ssh isard@192.168.10.1 "mkdir -p ~/.backups" 
-ssh isard@192.168.10.1 "mkdir -p -m 700 ~/.backups" 
-ssh isard@192.168.10.1 "ls -la ~/.backups"
+sssh_check(){
+    echo "Comprova l'accés per ssh ..."
+    ssh -o ConnectTimeout=10 "${SSH_USERNAME}@${SSH_REPO_ADDRESS}" -p "${SSH_REPO_PORT}" "echo ok"
+    echo "Crea el directori remot"
+    ssh -o ConnectTimeout=10 "${SSH_USERNAME}@${SSH_REPO_ADDRESS}" -p "${SSH_REPO_PORT}" "mkdir -p -m 700 ~/.backups"
+    ssh -o ConnectTimeout=10 "${SSH_USERNAME}@${SSH_REPO_ADDRESS}" -p "${SSH_REPO_PORT}" "ls -la ~/.backups"
 }
+
 borg_install(){
-sudo apt update -y
-sudo apt install borgbackup
-sudo apt autoremove
+    echo "Instal·la Borgbackup (en curt Borg) ..."
+    sudo apt update -y
+    sudo apt install -y borgbackup
+    sudo apt autoremove -y
 }
-
-BORG_REPO="ssh://${SSH_USERNAME}@${SSH_REPO_ADDRESS}:${SSH_REPO_PORT}/~/.backups"
 
 borg_check(){
+    echo "Posa un fitxer local en un nou repositori a $BORG_REPO ..."
     touch checkborg.txt
-
     if ! borg info "$BORG_REPO" &>/dev/null; then
         borg init --encryption=repokey "$BORG_REPO"
         echo "borg create $BORG_REPO::check checkborg.txt"
         borg create "$BORG_REPO::check" checkborg.txt
+     else
+        echo "Ja existeix el repositori."
     fi
-
-    echo "borg list $BORG_REPO"
-    borg list "$BORG_REPO"
 }
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../common/menu.sh"
 
-demana_confirmacio "Vols crear claus SSH? (s/n)" ssh_keys  
-demana_confirmacio "Vols instal·lar Borg backup? (s/n)" borg_install  
-demana_confirmacio "Vols provar les claus SSH? (s/n)" ssh_check  
-demana_confirmacio  "Vols provar Borg backup (s/n)?"  borg_check  
+declare -a MENU_ITEMS=(
+    "ssh_keys:Vols crear claus SSH?"
+    "borg_install:Vols instal·lar Borg backup?"
+    "ssh_check:Vols provar les claus SSH?"
+    "borg_check:Vols provar Borg backup?"
+)
 
+mostra_menu
+read -ra opcio
+executa_seleccio "${opcio[@]}"
 

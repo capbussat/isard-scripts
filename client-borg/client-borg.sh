@@ -46,6 +46,11 @@ borg_check(){
     fi
 }
 
+surt(){
+    echo "Sortint del script ...";
+    exit
+}
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../common/menu.sh"
 
@@ -54,6 +59,7 @@ declare -a MENU_ITEMS=(
     "borg_install:Vols instal·lar Borg backup?"
     "ssh_check:Vols provar les claus SSH?"
     "borg_check:Vols provar Borg backup?"
+    "surt:Vols sortir?"
 )
 
 mostra_menu

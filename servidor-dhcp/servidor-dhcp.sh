@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # servidor-dhcp.sh
 # si falla surt de l'script
 set -eu
@@ -15,7 +16,7 @@ enp3s0 Personal1
 enp4s0 Personal2 
 EOF
 
-install(){  
+install_kea(){  
 sudo hostnamectl set-hostname "servidor-dhcp"
 sudo apt update -y   
 sudo apt upgrade  
@@ -67,15 +68,17 @@ mostra_xarxa(){
 
 demanar_confirmacio (){
     echo 
-    read -n 1 -p "$1" tecla    
+    read -r -n 1 -p "$1" tecla  
+    echo
     if [[ $tecla == [sS] ]]; then
         echo "..."
         "$2"
     fi
+    return 0
 }
 
 
-demanar_confirmacio  "Actulitza i instal·la els paquets del servidor KEA DHCP? (s/n)" install
+demanar_confirmacio  "Actulitza i instal·la els paquets del servidor KEA DHCP? (s/n)" install_kea
 
 demanar_confirmacio  "Comprova enp1s0 per Default, enp2s0 Wireguard-VPN, i dues xarxes Personal1 i Personal2 sense ip. Seguim (s/n)?" mostra_xarxa
 

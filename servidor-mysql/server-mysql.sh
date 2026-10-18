@@ -4,6 +4,7 @@ clear
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 set -euo pipefail
+ADDR="192.168.37.2/24"
 
 instala_mysql(){
     sudo apt update -y && sudo apt upgrade -y
@@ -13,15 +14,27 @@ instala_mysql(){
 }
 
 actualitza_xarxa(){
-    if [ -f "/etc/netplan/99-isardvdi-conf.yaml" ]; then 
-        echo "Fent backup"
-        sudo mv /etc/netplan/99-isardvdi-conf.yaml  /etc/netplan/99-isardvdi-conf.yaml.bak
-        echo "Copia el nou fitxer a netplan."
-        sudo cp $SCRIPT_DIR/99-isardvdi-conf2.yaml /etc/netplan/99-isardvdi-conf2.yaml
-        netplan apply
-    elif [ -f "/etc/netplan/99-isardvdi-conf2.yaml" ]; then 
-        echo "Mantinc la configuracio de netplan."
-    fi
+if [ -f "/etc/netplan/99-isardvdi-conf.yaml" ]; then 
+    echo "Fent backup"
+    sudo mv /etc/netplan/99-isardvdi-conf.yaml  /etc/netplan/99-isardvdi-conf.yaml.bak
+fi
+if [ ! -f "/etc/netplan/99-isardvdi-conf2.yaml" ]; then 
+echo "Crea el nou fitxer a netplan."
+cat > "/etc/netplan/99-isardvdi-conf2.yaml" <<EOF
+network:
+  version: 2
+  ethernets:
+    ${IFACE}:
+      dhcp4: false
+      dhcp6: false
+      addresses:
+        - ${ADDR}
+EOF
+chmod 600 /etc/netplan/99-isardvdi-conf2.yaml
+netplan apply
+elif
+    echo "No cal actualitzar la configuració de netplan"
+fi
 }
 
 xarxa(){

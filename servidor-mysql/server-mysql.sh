@@ -3,6 +3,8 @@
 echo "Servidor-mysql amb Ubuntu 26"
 
 set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+echo $SCRIPT_DIR
 
 instala_mysql(){
     sudo apt update -y && sudo apt upgrade -y
@@ -13,7 +15,7 @@ instala_mysql(){
 
 actualitza_xarxa(){
     sudo mv /etc/netplan/99-isardvdi-conf.yaml  /etc/netplan/99-isardvdi-conf.yaml.bak
-    sudo cp 99-isardvdi-conf2.yaml /etc/netplan/99-isardvdi-conf2.yaml
+    sudo cp $SCRIPT_DIR/99-isardvdi-conf2.yaml /etc/netplan/99-isardvdi-conf2.yaml
     netplan apply
 }
 
@@ -23,7 +25,7 @@ xarxa(){
   ip route show
 }
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 source "$SCRIPT_DIR/../common/menu.sh"
 
 declare -a MENU_ITEMS=(

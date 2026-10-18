@@ -80,8 +80,8 @@ xarxa(){
 
 permet_access(){
     echo "Permet acces des de qualsevol adreça"
-    sudo sed -i.bak 's/^bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysld.cnf
-    sudo sed -i.bak 's/^bind-address\s*=\s*127\.0\.0\.1/mysqlx-bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysld.cnf
+    sudo sed -i.bak 's/^bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+    sudo sed -i.bak 's/^bind-address\s*=\s*127\.0\.0\.1/mysqlx-bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
     echo "Reinicia MySQL"
     sudo systemctl restart mysql
 }

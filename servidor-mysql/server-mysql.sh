@@ -43,7 +43,7 @@ EOF
 fi
 }
 
-carrega_csv(){
+carrega_fitxer_local_csv(){
 echo "Carrega el fitxer .csv en la taula alumnes"
 sudo mysql --local-infile=1 -e "
 LOAD DATA LOCAL INFILE 'MOCK_DATA.csv'
@@ -94,8 +94,15 @@ xarxa(){
 
 permet_access(){
     echo "Permet acces des de qualsevol adreça"
-    sudo sed -i.bak 's/^bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
-    sudo sed -i.bak 's/^mysqlx-bind-address\s*=\s*127\.0\.0\.1/mysqlx-bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+    CNF=/etc/mysql/mysql.conf.d/mysqld.cnf
+    echo "Permet carregar fitxers locals"
+    if grep -q '^local_infile' "$CNF"; then
+        sudo sed -i.bak 's/^local_infile\s*=.*/local_infile = 1/' "$CNF"
+    else
+        sudo sed -i.bak '/^\[mysqld\]/a local_infile = 1' "$CNF"
+    fi
+    sudo sed -i.bak 's/^bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/' "$CNF"
+    sudo sed -i.bak 's/^mysqlx-bind-address\s*=\s*127\.0\.0\.1/mysqlx-bind-address = 0.0.0.0/' "$CNF"
     echo "Reinicia MySQL"
     sudo systemctl restart mysql
 }
@@ -109,10 +116,12 @@ declare -a MENU_ITEMS=(
     "instala_mysql:Vols instal·lar el servidor MySQL?"
     "crea_bbdd_alumnes_i_crea_usuari_isard:Vols crear la base de dades alumnes i l'usuari isard?"
     "permet_access:Permet acces a MySQL des de qualsevol adreça?"
-    "carrega_csv:Carrega el fitxer csv a alumnes?"
+    "carrega_fitxer_local_csv:Carrega el fitxer csv a alumnes?"
     "surt:Vols sortir?"
 )
 
 mostra_menu
 read -ra opcio
 executa_seleccio "${opcio[@]}"
+echo
+echo "Executat sense errors."

@@ -46,7 +46,7 @@ fi
 carrega_fitxer_local_csv(){
 echo "Carrega el fitxer .csv en la taula alumnes"
 sudo mysql --local-infile=1 -e "
-LOAD DATA LOCAL INFILE 'MOCK_DATA.csv'
+LOAD DATA LOCAL INFILE '$SCRIPT_DIR/MOCK_DATA.csv'
 INTO TABLE alumnes.alumnes
 FIELDS TERMINATED BY ','
 ENCLOSED BY '\"'

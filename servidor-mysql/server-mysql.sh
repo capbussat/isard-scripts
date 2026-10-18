@@ -1,10 +1,9 @@
 #!/bin/bash
 # usa scripts de ../common/
-echo "Servidor-mysql amb Ubuntu 26"
+clear
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-echo $SCRIPT_DIR
 
 instala_mysql(){
     sudo apt update -y && sudo apt upgrade -y
@@ -14,9 +13,15 @@ instala_mysql(){
 }
 
 actualitza_xarxa(){
-    sudo mv /etc/netplan/99-isardvdi-conf.yaml  /etc/netplan/99-isardvdi-conf.yaml.bak
-    sudo cp $SCRIPT_DIR/99-isardvdi-conf2.yaml /etc/netplan/99-isardvdi-conf2.yaml
-    netplan apply
+    if [ -f "/etc/netplan/99-isardvdi-conf.yaml" ]; then 
+        echo "Fent backup"
+        sudo mv /etc/netplan/99-isardvdi-conf.yaml  /etc/netplan/99-isardvdi-conf.yaml.bak
+        echo "Copia el nou fitxer a netplan."
+        sudo cp $SCRIPT_DIR/99-isardvdi-conf2.yaml /etc/netplan/99-isardvdi-conf2.yaml
+        netplan apply
+    elif [ -f "/etc/netplan/99-isardvdi-conf2.yaml" ]; then 
+        echo "Mantinc la configuracio de netplan."
+    fi
 }
 
 xarxa(){

@@ -43,6 +43,20 @@ EOF
 fi
 }
 
+carrega_csv(){
+echo "Carrega el fitxer .csv en la taula alumnes"
+sudo mysql --local-infile=1 -e "
+LOAD DATA LOCAL INFILE 'MOCK_DATA.csv'
+INTO TABLE alumnes.alumnes
+FIELDS TERMINATED BY ','
+ENCLOSED BY '\"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(nom, telefon, email, data_naixement, curs);
+"
+}
+
+
 actualitza_xarxa(){
 if [ -f "/etc/netplan/99-isardvdi-conf.yaml" ]; then 
     echo "Fent backup"
@@ -95,6 +109,7 @@ declare -a MENU_ITEMS=(
     "instala_mysql:Vols instal·lar el servidor MySQL?"
     "crea_bbdd_alumnes_i_crea_usuari_isard:Vols crear la base de dades alumnes i l'usuari isard?"
     "permet_access:Permet acces a MySQL des de qualsevol adreça?"
+    "carrega_csv:Carrega el fitxer csv a alumnes?"
     "surt:Vols sortir?"
 )
 

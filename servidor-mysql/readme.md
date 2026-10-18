@@ -14,7 +14,7 @@ cd servidor-mysql
 chmod +x server-mysql.sh  
 ./server-mysql.sh  
 
-El client ha de tenir també la xarxa Personal1
-Per actualitzar la darrera versió 
+El client ha de tenir també la xarxa Personal1.\
+Per actualitzar la darrera versió:
 
 git stash; git pull

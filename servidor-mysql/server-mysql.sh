@@ -3,6 +3,12 @@ echo "Servidor-mysql amb Ubuntu 26"
 
 set -euo pipefail
 
+instala_mysql(){
+    sudo apt update -y && sudo apt upgrade -y
+    sudo apt install mysql-server -y
+    mysql -V
+}
+
 demanar_confirmacio (){
     echo 
     read -n 1 -p "$1" tecla    

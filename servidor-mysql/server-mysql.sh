@@ -7,6 +7,7 @@ instala_mysql(){
     sudo apt update -y && sudo apt upgrade -y
     sudo apt install mysql-server -y
     mysql -V
+    sudo systemctl status mysql-server
 }
 
 demanar_confirmacio (){
@@ -32,3 +33,4 @@ xarxa(){
 
 demanar_confirmacio "Vols canviar la xarxa? (s/n)" actualitza_xarxa
 demanar_confirmacio "Vols comprovar la xarxa? (s/n)" xarxa
+demanar_confirmacio "Vols instal·lar el servidor MySQL? (s/n)" instala_mysql

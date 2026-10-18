@@ -16,7 +16,7 @@ instala_mysql(){
 
 crea_bbdd_alumnes_i_crea_usuari_isard(){
 if [ ! -f $SCRIPT_DIR/crea_bbdd_alumnes.sql ]; then
-cat "$SCRIPT_DIR/crea_bbdd_alumnes.sql" << EOF
+cat > "$SCRIPT_DIR/crea_bbdd_alumnes.sql" << EOF
 CREATE DATABASE IF NOT EXISTS alumnes CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE TABLE IF NOT EXISTS alumnes.alumnes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,7 +31,7 @@ EOF
 fi
 
 if [ ! -f $SCRIPT_DIR/crea_usuari_isard.sql ]; then
-cat "$SCRIPT_DIR/crea_usuari_isard.sql" << EOF
+cat > "$SCRIPT_DIR/crea_usuari_isard.sql" << EOF
 -- crea_usuari_isard.sql
 CREATE USER IF NOT EXISTS 'isard'@'$ADDR' IDENTIFIED BY 'pirineus';
 GRANT ALL PRIVILEGES ON *.* TO 'isard'@'192.168.37.2';

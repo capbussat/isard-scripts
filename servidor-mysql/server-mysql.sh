@@ -1,4 +1,5 @@
 #!/bin/bash
+# usa scripts de ../common/
 echo "Servidor-mysql amb Ubuntu 26"
 
 set -euo pipefail
@@ -8,15 +9,6 @@ instala_mysql(){
     sudo apt install mysql-server -y
     mysql -V
     sudo systemctl status mysql
-}
-
-demanar_confirmacio (){
-    echo 
-    read -n 1 -p "$1" tecla    
-    if [[ $tecla == [sS] ]]; then
-        echo "..."
-        "$2"
-    fi
 }
 
 actualitza_xarxa(){
@@ -31,6 +23,16 @@ xarxa(){
   ip route show
 }
 
-demanar_confirmacio "Vols canviar la xarxa? (s/n)" actualitza_xarxa
-demanar_confirmacio "Vols comprovar la xarxa? (s/n)" xarxa
-demanar_confirmacio "Vols instal·lar el servidor MySQL? (s/n)" instala_mysql
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../common/menu.sh"
+
+declare -a MENU_ITEMS=(
+    "actualitza_xarxa:Vols canviar la xarxa?"
+    "xarxa:Vols comprovar la xarxa?"
+    "instala_mysql:Vols instal·lar el servidor MySQL?"
+    "surt:Vols sortir?"
+)
+
+mostra_menu
+read -ra opcio
+executa_seleccio "${opcio[@]}"

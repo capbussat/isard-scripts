@@ -11,7 +11,9 @@ sudo apt install git
 git clone https://github.com/capbussat/isard-scripts/servidor-mysql  
 cd isard-scripts  
 cd servidor-mysql  
-chmod +x servidor-mysql.sh  
-./servidor-mysql.sh  
+chmod +x server-mysql.sh  
+./server-mysql.sh  
 
 El client ha de tenir també la xarxa Personal1
+Per actualitzar la darrera versió 
+git pull origin main

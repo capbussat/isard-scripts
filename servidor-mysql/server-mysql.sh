@@ -1,5 +1,4 @@
 #!/bin/bash
-# usa script ../common/
 set -euo
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ADDR="192.168.37.2/24"
@@ -79,7 +78,15 @@ xarxa(){
   ip route show
 }
 
+permet_access(){
+    echo "Permet acces des de qualsevol adreça"
+    sudo sed -i.bak 's/^bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysld.cnf
+    sudo sed -i.bak 's/^bind-address\s*=\s*127\.0\.0\.1/mysqlx-bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysld.cnf
+    echo "Reinicia MySQL"
+    sudo systemctl restart mysql
+}
 
+# usa script ../common/menu.sh
 source "$SCRIPT_DIR/../common/menu.sh"
 
 declare -a MENU_ITEMS=(
@@ -87,6 +94,7 @@ declare -a MENU_ITEMS=(
     "xarxa:Vols comprovar la xarxa?"
     "instala_mysql:Vols instal·lar el servidor MySQL?"
     "crea_bbdd_alumnes_i_crea_usuari_isard:Vols crear la base de dades alumnes i l'usuari isard?"
+    "permet_access:Permet acces a MySQL des de qualsevol adreça?"
     "surt:Vols sortir?"
 )
 

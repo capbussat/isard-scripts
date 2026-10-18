@@ -34,9 +34,10 @@ if [ ! -f $SCRIPT_DIR/crea_usuari_isard.sql ]; then
 cat > "$SCRIPT_DIR/crea_usuari_isard.sql" << EOF
 -- crea_usuari_isard.sql
 CREATE USER IF NOT EXISTS 'isard'@'$ADDR' IDENTIFIED BY 'pirineus';
-GRANT ALL PRIVILEGES ON *.* TO 'isard'@'192.168.37.2';
+GRANT SELECT, INSERT, UPDATE, DELETE ON alumnes.* TO 'isard'@'$ADDR';
 FLUSH PRIVILEGES;
 EOF
+    sudo chmod 600 $SCRIPT_DIR/crea_usuari_isard.sql;
     sudo mysql <  $SCRIPT_DIR/crea_usuari_isard.sql;
 fi
 }

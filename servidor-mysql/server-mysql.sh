@@ -14,6 +14,33 @@ instala_mysql(){
     sudo systemctl status mysql
 }
 
+crea_bbdd_alumnes_i_crea_usuari_isard(){
+if [ ! -f $SCRIPT_DIR/crea_bbdd_alumnes.sql ]; then
+cat "$SCRIPT_DIR/crea_bbdd_alumnes.sql" << EOF
+CREATE DATABASE IF NOT EXISTS alumnes CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS alumnes.alumnes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    telefon VARCHAR(20),
+    email VARCHAR(255),
+    data_naixement DATE,
+    curs VARCHAR(20)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+EOF
+    sudo mysql <  $SCRIPT_DIR/crea_bbdd_alumnes.sql;
+fi
+
+if [ ! -f $SCRIPT_DIR/crea_usuari_isard.sql ]; then
+cat "$SCRIPT_DIR/crea_usuari_isard.sql" << EOF
+-- crea_usuari_isard.sql
+CREATE USER IF NOT EXISTS 'isard'@'$ADDR' IDENTIFIED BY 'pirineus';
+GRANT ALL PRIVILEGES ON *.* TO 'isard'@'192.168.37.2';
+FLUSH PRIVILEGES;
+EOF
+    sudo mysql <  $SCRIPT_DIR/crea_usuari_isard.sql;
+fi
+}
+
 actualitza_xarxa(){
 if [ -f "/etc/netplan/99-isardvdi-conf.yaml" ]; then 
     echo "Fent backup"
@@ -44,7 +71,8 @@ fi
 
 xarxa(){
   echo 
-  ip address show 
+  ip address show
+  echo 
   ip route show
 }
 
@@ -55,6 +83,7 @@ declare -a MENU_ITEMS=(
     "actualitza_xarxa:Vols canviar la xarxa?"
     "xarxa:Vols comprovar la xarxa?"
     "instala_mysql:Vols instal·lar el servidor MySQL?"
+    "crea_bbdd_alumnes_i_crea_usuari_isard:Vols crear la base de dades alumnes i l'usuari isard?"
     "surt:Vols sortir?"
 )
 

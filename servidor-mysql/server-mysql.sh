@@ -7,7 +7,7 @@ instala_mysql(){
     sudo apt update -y && sudo apt upgrade -y
     sudo apt install mysql-server -y
     mysql -V
-    sudo systemctl status mysql-server
+    sudo systemctl status mysql
 }
 
 demanar_confirmacio (){

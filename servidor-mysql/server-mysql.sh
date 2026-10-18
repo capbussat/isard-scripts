@@ -12,11 +12,17 @@ demanar_confirmacio (){
     fi
 }
 
+actualitza_xarxa(){
+    sudo mv /etc/netplan/99-isardvdi-conf.yaml  /etc/netplan/99-isardvdi-conf.yaml.bak
+    sudo cp 99-isardvdi-conf2.yaml /etc/netplan/99-isardvdi-conf2.yaml
+    netplan apply
+}
+
 xarxa(){
   echo 
   ip address show 
   ip route show
 }
 
-
+demanar_confirmacio "Vols canviar la xarxa? (s/n)" actualitza_xarxa
 demanar_confirmacio "Vols comprovar la xarxa? (s/n)" xarxa

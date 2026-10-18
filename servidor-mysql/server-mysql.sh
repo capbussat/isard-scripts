@@ -1,7 +1,6 @@
 #!/bin/bash
 # usa script ../common/
-set -euo pipefail
-
+set -euo
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ADDR="192.168.37.2/24"
 
@@ -27,7 +26,9 @@ CREATE TABLE IF NOT EXISTS alumnes.alumnes (
     curs VARCHAR(20)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 EOF
+    sudo chmod 600  $SCRIPT_DIR/crea_bbdd_alumnes.sql;
     sudo mysql <  $SCRIPT_DIR/crea_bbdd_alumnes.sql;
+    echo "Executat $SCRIPT_DIR/crea_bbdd_alumnes.sql"
 fi
 
 if [ ! -f $SCRIPT_DIR/crea_usuari_isard.sql ]; then
@@ -39,6 +40,7 @@ FLUSH PRIVILEGES;
 EOF
     sudo chmod 600 $SCRIPT_DIR/crea_usuari_isard.sql;
     sudo mysql <  $SCRIPT_DIR/crea_usuari_isard.sql;
+    echo "Executat $SCRIPT_DIR/crea_usuari_isard.sql"
 fi
 }
 

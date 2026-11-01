@@ -17,10 +17,10 @@ instala_postgresql(){
 }
 
 crea_bd_alumnes(){
-if [ -f "alumnes.csv"]; then
+if [ -f "alumnes.csv" ]; then
     chown isard:isard alumnes.csv 
     cp alumnes.csv /tmp/alumnes.csv
-    psql -u postgres -f alumnes.sql
+    sudo -u postgres psql -f alumnes.sql
 fi
 }
 

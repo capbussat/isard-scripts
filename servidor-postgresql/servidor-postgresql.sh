@@ -24,6 +24,15 @@ if [ -f "alumnes.csv" ]; then
 fi
 }
 
+instala_DBeaver(){
+    curl -fsSL -O https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
+    if [ -f dbeaver-ce_latest_amd64.deb ]; then
+        sudo dpkg -i dbeaver-ce_latest_amd64.deb
+        dbeaver --version
+        echo "Prova: dbeaver ";
+    fi
+}
+
 surt(){
 echo "Adéu";
 }
@@ -34,6 +43,7 @@ source "$SCRIPT_DIR/../common/menu.sh"
 declare -a MENU_ITEMS=(
     "instala_postgresql:Vols instal·lar PostgreSQL?"
     "crea_bd_alumnes:Vols crear la base de dades alumnes i la seva taula alumnes?"
+    "instala_DBeaver:Vols instal·lar DBeaver per administrar base de dades?"
     "surt:Vols sortir?"
 )
 

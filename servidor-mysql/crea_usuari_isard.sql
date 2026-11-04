@@ -1,0 +1,3 @@
+CREATE USER IF NOT EXISTS 'isard'@'%' IDENTIFIED BY 'pirineus';
+GRANT ALL PRIVILEGES ON alumnes.* TO 'isard'@'%';
+FLUSH PRIVILEGES;

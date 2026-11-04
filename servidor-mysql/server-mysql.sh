@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS alumnes (
     email VARCHAR(255) UNIQUE,
     data_naixement DATE,
     curs VARCHAR(20)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)
 EOF
     sudo chmod 600  $SCRIPT_DIR/crea_bd_alumnes.sql;
     sudo mysql <  $SCRIPT_DIR/crea_bd_alumnes.sql;

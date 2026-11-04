@@ -18,6 +18,7 @@ crea_bd_alumnes_i_crea_usuari_isard(){
 if [ ! -f $SCRIPT_DIR/crea_bd_alumnes.sql ]; then
 cat > "$SCRIPT_DIR/crea_bd_alumnes.sql" << EOF
 CREATE DATABASE IF NOT EXISTS alumnes CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE alumnes;
 CREATE TABLE IF NOT EXISTS alumnes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,

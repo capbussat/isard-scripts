@@ -14,7 +14,7 @@ instala_mysql(){
     sudo systemctl status mysql
 }
 
-crea_bbdd_alumnes_i_crea_usuari_isard(){
+crea_bd_alumnes_i_crea_usuari_isard(){
 if [ ! -f $SCRIPT_DIR/crea_bd_alumnes.sql ]; then
 cat > "$SCRIPT_DIR/crea_bd_alumnes.sql" << EOF
 CREATE DATABASE IF NOT EXISTS alumnes CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS alumnes.alumnes (
     curs VARCHAR(20)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 EOF
-    sudo chmod 600  $SCRIPT_DIR/crea_bbdd_alumnes.sql;
-    sudo mysql <  $SCRIPT_DIR/crea_bbdd_alumnes.sql;
-    echo "Executat $SCRIPT_DIR/crea_bbdd_alumnes.sql"
+    sudo chmod 600  $SCRIPT_DIR/crea_bd_alumnes.sql;
+    sudo mysql <  $SCRIPT_DIR/crea_bd_alumnes.sql;
+    echo "Executat $SCRIPT_DIR/crea_bd_alumnes.sql"
 fi
 
 if [ ! -f $SCRIPT_DIR/crea_usuari_isard.sql ]; then
@@ -116,7 +116,7 @@ declare -a MENU_ITEMS=(
     "actualitza_xarxa:Vols canviar la xarxa?"
     "xarxa:Vols comprovar la xarxa?"
     "instala_mysql:Vols instal·lar el servidor MySQL?"
-    "crea_bbdd_alumnes_i_crea_usuari_isard:Vols crear la base de dades alumnes i l'usuari isard?"
+    "crea_bd_alumnes_i_crea_usuari_isard:Vols crear la base de dades alumnes i l'usuari isard?"
     "permet_access:Permet acces a MySQL des de qualsevol adreça?"
     "carrega_fitxer_local_csv:Carrega el fitxer csv a alumnes?"
     "surt:Vols sortir?"

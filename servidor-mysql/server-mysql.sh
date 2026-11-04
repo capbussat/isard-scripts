@@ -22,8 +22,8 @@ USE alumnes;
 CREATE TABLE IF NOT EXISTS alumnes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
-    telefon VARCHAR(20),mysql
-    email VARCHAR(255),
+    telefon VARCHAR(20),
+    email VARCHAR(255) UNIQUE,
     data_naixement DATE,
     curs VARCHAR(20)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

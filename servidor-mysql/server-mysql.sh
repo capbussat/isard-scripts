@@ -110,6 +110,10 @@ permet_access(){
     sudo systemctl restart mysql
 }
 
+surt(){
+echo "Adeu";
+}
+
 # usa script ../common/menu.sh
 source "$SCRIPT_DIR/../common/menu.sh"
 

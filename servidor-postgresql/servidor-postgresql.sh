@@ -24,6 +24,10 @@ if [ -f "alumnes.csv" ]; then
 fi
 }
 
+crea_contrasenya_postgres(){
+    sudo -u postgres psql -f contrasenya.sql
+}
+
 instala_DBeaver(){
     curl -fsSL -O https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
     if [ -f dbeaver-ce_latest_amd64.deb ]; then
@@ -43,6 +47,7 @@ source "$SCRIPT_DIR/../common/menu.sh"
 declare -a MENU_ITEMS=(
     "instala_postgresql:Vols instal·lar PostgreSQL?"
     "crea_bd_alumnes:Vols crear la base de dades alumnes i la seva taula alumnes?"
+    "crea_contrasenya_postgres":"Vols crear una contrasenya per defecte per posgres?"
     "instala_DBeaver:Vols instal·lar DBeaver per administrar base de dades?"
     "surt:Vols sortir?"
 )

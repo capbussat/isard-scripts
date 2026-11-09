@@ -2,6 +2,9 @@
 # Instal·la MongoDB 8.0 Community a Ubuntu 24.04 (Noble)
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ADDR="192.168.37.71/24"
+
 clear
 echo "Fitxer d'instal·lació MOngoDB:"
 

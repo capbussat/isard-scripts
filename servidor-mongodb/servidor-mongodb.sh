@@ -3,20 +3,17 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ADDR="192.168.37.71/24"
+# ADDR="192.168.37.71/24"
 
 clear
 echo "Fitxer d'instal·lació MOngoDB:"
 
 instala_mongodb(){
   sudo apt-get update -y && sudo apt-get install -y gnupg curl  \
-  curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
-  sudo gpg --yes --dearmor -o /usr/share/keyrings/mongodb-server-8.0.gpg
-
-
+  curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg --yes --dearmor -o /usr/share/keyrings/mongodb-server-8.0.gpg
+  sudo apt-get install -y ca-certificates
   echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse" | \
   sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
-
   sudo apt-get update -y && sudo apt-get install -y mongodb-org
 
   sudo systemctl daemon-reload
@@ -38,3 +35,9 @@ declare -a MENU_ITEMS=(
   "instala_mongodb:Vols instal·lar MongoDB?"
   "surt:Vols sortir?"
 )
+
+mostra_menu
+read -ra opcio
+executa_seleccio "${opcio[@]}"
+echo
+echo "Executat sense errors."

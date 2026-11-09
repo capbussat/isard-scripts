@@ -3,10 +3,10 @@
 set -euo pipefail
 
 clear
-echo "Fitxer d'instal·lació:"
+echo "Fitxer d'instal·lació MOngoDB:"
 
 instala_mongodb(){
-  sudo apt-get update - y && sudo apt-get install -y gnupg curl  \
+  sudo apt-get update -y && sudo apt-get install -y gnupg curl  \
   curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
   sudo gpg --yes --dearmor -o /usr/share/keyrings/mongodb-server-8.0.gpg
 

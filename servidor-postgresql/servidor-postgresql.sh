@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo
+set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ADDR="192.168.37.71/24"
 

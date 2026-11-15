@@ -20,6 +20,8 @@ chmod +x servidor-nfs.sh
 
 ./servidor-nfs.sh
 
-Els clients han de tenir també configurada la xarxa Personal1. Per actualitzar a la darrera versió:
+Els clients han de tenir també configurada la xarxa Personal1. 
+
+Per actualitzar a la darrera versió:
 
 git stash; git pull

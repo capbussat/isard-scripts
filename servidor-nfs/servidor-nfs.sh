@@ -1,4 +1,4 @@
-ports#!/bin/bash
+#!/bin/bash
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ADDR="192.168.1.1/24"

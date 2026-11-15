@@ -1,4 +1,4 @@
-#!/bin/bash
+ports#!/bin/bash
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ADDR="192.168.1.1/24"
@@ -23,15 +23,16 @@ crea_fitxer_exports(){
   sudo find /srv/shared -type d -exec chmod 755 {} +
   sudo find /srv/shared -type f -exec chmod 644 {} +
   echo "Permisos aplicats."
-if [ -f /etc/networks ]; then
-  
+if [ -f /etc/exports ]; then
   echo "Ja existeix /etc/networks. Vols continuar i esborrar-lo o sortir amb cltr+c)?"
   read -n1;
   sudo rm /etc/exports
   echo "Esborrat /etc/exports ..."
+fi
   sudo touch /etc/exports
   echo "/srv/shared 192.168.1.0/24(ro,sync,no_subtree_check)" | sudo tee -a /etc/exports   
   sudo exportfs -ra
+  echo "Permís de lectura per a la xarxa 192.168.1.0/24."
 }
 
 actualitza_xarxa(){

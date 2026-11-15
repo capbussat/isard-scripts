@@ -1,4 +1,5 @@
-# Client NFS
+#!/bin/bash
+set -euo pipefail
 
 # Comprova errors
 set -euo pipefail

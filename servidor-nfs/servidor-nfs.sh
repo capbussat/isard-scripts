@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ADDR="192.168.224.1/24"
+ADDR="192.168.1.1/24"
+NET="192.168.1.0/24"
 
 clear
 echo "Fitxer d'instal·lació:"
@@ -13,6 +14,23 @@ instala_nfs(){
   sudo systemctl restart nfs-kernel-server
   sudo systemctl status nfs-kernel-server
   echo "***";
+}
+
+crea_fitxer_exports(){
+  sudo mkdir -p /srv/shared
+  echo "Creat el directori /srv/shared"
+  sudo chown -R nobody:nogroup /srv/shared
+  sudo find /srv/shared -type d -exec chmod 755 {} +
+  sudo find /srv/shared -type f -exec chmod 644 {} +
+if [ -f /etc/networks ]; then
+  
+  echo "Ja existeix /etc/networks. Vols continuar i esborrar-lo o sortir amb cltr+c)?"
+  read -n1;
+  sudo rm /etc/exports
+  echo "Esborrat /etc/exports ..."
+  sudo touch /etc/exports
+  echo "/srv/shared 192.168.1.0/24(ro,sync,no_subtree_check)" | sudo tee -a /etc/exports   
+  sudo exportfs -ra
 }
 
 actualitza_xarxa(){

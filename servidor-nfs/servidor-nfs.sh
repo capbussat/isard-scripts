@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ADDR="192.168.224.1"
+ADDR="192.168.224.1/24"
 
 clear
 echo "Fitxer d'instal·lació:"

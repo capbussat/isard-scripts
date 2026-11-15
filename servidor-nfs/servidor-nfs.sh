@@ -22,6 +22,7 @@ crea_fitxer_exports(){
   sudo chown -R nobody:nogroup /srv/shared
   sudo find /srv/shared -type d -exec chmod 755 {} +
   sudo find /srv/shared -type f -exec chmod 644 {} +
+  echo "Permisos aplicats."
 if [ -f /etc/networks ]; then
   
   echo "Ja existeix /etc/networks. Vols continuar i esborrar-lo o sortir amb cltr+c)?"

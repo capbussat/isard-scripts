@@ -8,7 +8,7 @@ echo "Fitxer d'instal·lació:"
 echo "***";
 instala_nfs(){
   sudo apt update -y && sudo apt upgrade -y
-  sudo install nfs-kernel-server
+  sudo apt install nfs-kernel-server
   echo "Instal·lació completa"
   sudo systemctl restart nfs-kernel-server
   sudo systemctl status nfs-kernel-server

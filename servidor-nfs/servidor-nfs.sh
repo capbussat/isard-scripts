@@ -79,6 +79,7 @@ source "$SCRIPT_DIR/../common/menu.sh"
 
 declare -a MENU_ITEMS=(
   "instala_nfs:Vols instal·lar el servidor NFS?"
+  "crea_fitxer_exports:Configura el fitxer /etc/exports amb /srv/shared en lectura"
   "actualitza_xarxa:Vols actualitzar la xarxa?"
   "comprova_xarxa:Vols comprovar la xarxa?"
   "surt:Vols sortir?"

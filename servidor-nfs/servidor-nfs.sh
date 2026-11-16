@@ -23,17 +23,25 @@ crea_fitxer_exports(){
   sudo find /srv/shared -type d -exec chmod 755 {} +
   sudo find /srv/shared -type f -exec chmod 644 {} +
   echo "Permisos aplicats."
-if [ -f /etc/exports ]; then
-  echo "Ja existeix /etc/networks. Vols continuar i esborrar-lo o sortir amb cltr+c)?"
-  read -n1;
-  sudo rm /etc/exports
-  echo "Esborrat /etc/exports ..."
-fi
+  if [ -f /etc/exports ]; then
+    echo "Ja existeix /etc/networks. Vols continuar i esborrar-lo o sortir amb cltr+c)?"
+    read -n1;
+    sudo rm /etc/exports
+    echo "Esborrat /etc/exports ..."
+  fi
   sudo touch /etc/exports
   echo "/srv/shared 192.168.1.0/24(ro,sync,no_subtree_check)" | sudo tee -a /etc/exports   
   sudo exportfs -ra
   echo "Permís de lectura per a la xarxa 192.168.1.0/24."
 }
+
+install_autofs(){
+  sudo apt update -y &&  sudo apt install autofs nfs-common
+  sudo touch /etc/auto.master
+  echo "en desenvolupament" | sudo tee -a /etc/auto.master
+  echo "Creat /etc/auto.master"
+}
+
 
 actualitza_xarxa(){
 if [ -f "/etc/netplan/99-isardvdi-conf.yaml" ]; then 

@@ -38,8 +38,10 @@ crea_fitxer_exports(){
 install_autofs(){
   sudo apt update -y &&  sudo apt install autofs nfs-common
   sudo touch /etc/auto.master
+  sudo touch /etc/auto.nfs
   echo "en desenvolupament" | sudo tee -a /etc/auto.master
   echo "Creat /etc/auto.master"
+  
 }
 
 
